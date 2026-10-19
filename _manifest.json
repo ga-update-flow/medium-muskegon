@@ -1,7 +1,6 @@
 {
  "start": "https://muskegonfoundation.org",
  "files": {
-  "index.html": "https://muskegonfoundation.org/",
   "_ext/bbb2acbc68.nxcli.io/wp-content/themes/Divi-child/favicon.ico": "https://bbb2acbc68.nxcli.io/wp-content/themes/Divi-child/favicon.ico",
   "_ext/bbb2acbc68.nxcli.io/wp-content/uploads/et-fonts/NexaBold.otf": "https://bbb2acbc68.nxcli.io/wp-content/uploads/et-fonts/NexaBold.otf",
   "wp-content/plugins/gravityforms/legacy/css/formreset.min.css": "https://muskegonfoundation.org/wp-content/plugins/gravityforms/legacy/css/formreset.min.css?ver=3.1.2-b-modified-1790022867",
@@ -7204,7 +7203,8 @@
   "author/jbenedict/page/10/index.html": "https://muskegonfoundation.org/author/jbenedict/page/10/",
   "author/jbenedict/page/11/index.html": "https://muskegonfoundation.org/author/jbenedict/page/11/",
   "author/jbenedict/page/12/index.html": "https://muskegonfoundation.org/author/jbenedict/page/12/",
-  "author/jbenedict/page/13/index.html": "https://muskegonfoundation.org/author/jbenedict/page/13/"
+  "author/jbenedict/page/13/index.html": "https://muskegonfoundation.org/author/jbenedict/page/13/",
+  "index.html": "https://muskegonfoundation.org/"
  },
  "failed": [
   {
