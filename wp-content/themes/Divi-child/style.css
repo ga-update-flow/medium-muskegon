@@ -1,0 +1,1240 @@
+/*
+Theme Name: Divi Child
+Theme URI: http://www.elegantthemes.com/gallery/divi/
+Template: Divi
+Author: Lake FX Media
+Author URI: https://lakefxmedia.com/
+Description: Divi child theme by Lake FX Media.
+Version: 4.25.1.1720096847
+Updated: 2024-07-04 08:40:47
+
+*/
+:root {
+  --primary: #4cc0da;
+  --navy: #24408F;
+  --green: #ABD06A;
+  --sans-font-1: 'Nexa Regular', Helvetica, Arial, Lucida, sans-serif; 
+  --heading-font: var(--sans-font-1);
+  --button-font: var(--sans-font-1);
+  --gutter: 50px;
+  --spacer: 20px;
+  --body-bg:  #fff;
+  --body-bg-alt: #f9f9f9;
+  --container-tease-rows: 1070px;
+}
+
+#page-container {
+  max-width: 1500px;
+  margin-inline: auto;
+  overflow-x: hidden;
+  box-shadow: 0 0 80px rgba(0,0,0,.08);
+}
+
+.et-main-area {
+  overflow-x: clip;
+}
+
+/* Nav ------------------------------- */
+.et-menu li li a {
+  padding: 6px 12px;
+  line-height: 1.3;
+}
+.et-menu li li.menu-item-has-children>a:first-child:after {
+  right: 10px;
+}
+
+
+/* ============= Utilities =================== */
+.m-0 {
+  margin: 0 !important;
+}
+
+
+/* ============= Main Navigation =================== */
+.et_pb_section_1_tb_header {
+  padding: 0 30px;
+}
+
+#menu-main-menu li:last-child .sub-menu {
+  transform: translateX(-180px);
+}
+
+.branding {
+  margin-bottom:0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* show desktop menu on phone */
+@media (min-width: 768px) and (max-width: 980px) {
+  .pa-open-mobile-menu .et_pb_menu__menu {
+      display: flex!important;
+  }
+  .pa-open-mobile-menu .et_mobile_nav_menu {
+      display: none!important;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile_menu_bar {
+      transform: translateY(4px) !important;
+  }
+  .et_pb_icon_1_tb_header .et_pb_icon_wrap {
+      transform: scaleX(0.34) scaleY(0.34) translateX(40px) translateY(51px) !important;
+  }
+}
+
+.et_pb_searchsubmit {
+  border-radius: 50px;
+}
+
+@media (max-width: 1070px) {
+  #main-menu {
+      padding-top:0;
+      margin: 0 !important;
+  }
+  #portal-menu a,
+  #main-menu a {
+      font-size: 14px;
+  }
+}
+
+#menu-main-menu {
+  gap: 6px;
+}
+
+#menu-main-menu > li {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+
+/* begin tablet menu styles */
+@media (min-width: 768px) and (max-width: 980px) {
+  .et_pb_section_2_tb_header {
+    padding: 0;
+    
+    .et_pb_row_2_tb_header {
+      padding: 0;
+    }
+  }
+}
+/* end tablet menu styles */
+
+
+/*  begin mobile menu styles */
+.et_pb_section_2_tb_header {
+  position: fixed;
+  width: 100vw;
+  
+	#mobile_menu3 {
+		max-height: calc(100vh - 50px);
+		overflow-y: auto;
+		padding: 0;
+	}
+
+	.mobile_nav.opened .mobile_menu_bar:before {
+		content: '\4d';
+	}
+
+	.et_pb_row {
+	  width: 100%;
+	}
+
+	.et_pb_menu--with-logo .et_pb_menu__logo {
+		padding: 5px;
+	}
+
+	.et_mobile_menu {
+		border-top:0;
+		min-width: 100vw;
+	}
+
+	.et_mobile_nav_menu span {
+		transform: translateY(0) !important;
+	}
+
+	.et_mobile_menu li {
+		text-align:center !important;
+	}
+  
+	.et_mobile_menu li li, .et_mobile_menu li ul {
+		padding-left:0 !important;
+	}
+}
+/*  end mobile menu styles */
+
+
+/* del
+@media (max-width: 980px) {
+  .et_pb_row_1_tb_header.et_pb_row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      padding-bottom: 5px !important;
+  }
+  .et_pb_row {
+      width:96%;
+      max-width: 100%;
+  }
+}
+
+@media (max-width: 780px) {
+  
+  .et_pb_row_1_tb_header.et_pb_row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+  }
+  #portal-menu {
+      display: none;
+  }
+
+  #main-menu {
+      transform: translateX(-20px) translateY(-5px);
+  }
+} 
+*/
+
+
+/*  del
+@media (max-width: 479px) {
+   	#search__button {
+		margin: 0 !important;
+	}
+
+    .et_pb_menu_0_tb_header.et_pb_menu, .et_pb_menu_1_tb_header.et_pb_menu {
+        position: absolute;
+        transform: translate(-30px, -50px);
+    } 
+    #search__button {
+        transform: translate(-5px, 5px);
+    }
+}
+*/
+
+
+/* ============= Search Bar =================== */
+#search__bar {
+  position: fixed;
+  top: -200px;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 10px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: top 0.5s ease-in-out;
+  width: 100%;
+  text-align: center;
+  padding: 20px 100px;
+  z-index: 1000;
+}
+
+#search__bar.hidden {
+  top: -200px;
+}
+
+#search__bar.visible {
+  top: 0px;
+}
+.admin-bar #search__bar.visible {
+top: 32px;
+}
+
+#search_form_inpage, input[type='text'],
+#search__bar #top_search input[type='text'] {
+  background-color: #efefef;
+  border-radius: 50px !important;
+  margin-right: 5px;
+}
+
+#top_search {
+border: none !important;
+}
+
+#search__bar #top_search  {
+  margin-bottom: 0 !important;
+}
+
+
+.button {
+  font-family: var(--button-font);
+  font-size: 1.2rem;
+  color: var(--primary) !important;
+  background-color: white;
+  border: 2px solid var(--primary) !important;
+  display: inline-block;
+  padding: .35rem 1rem 0 !important;
+  border-radius: 50px;
+  transition: all .3s;
+}
+.button:hover {
+  background: var(--primary);
+  color: white !important;
+  border-color: transparent;
+}
+
+.et_pb_searchsubmit {
+  font-family: var(--button-font);
+  color: white !important;
+  background: var(--primary) !important;
+  font-size: 1rem !important;
+  padding-block: .25rem 0 !important;
+}
+
+#search__button:hover,
+#search__close:hover {
+  cursor: pointer;
+}
+
+#search__bar {
+  position: fixed;
+  top: -200px;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: top 0.5s ease-in-out;
+  width: 100%;
+  text-align: center;
+  padding: 20px 100px 20px;
+  z-index: 1000;
+}
+
+#search__bar.hidden {
+  top: -200px;
+}
+
+#search__bar.visible {
+  top: 0px;
+}
+
+#search__bar input[type='text'] {
+  border-color: transparent !important;
+  background-color: #efefef;
+  font-size: 16px;
+}
+
+#search__button:hover,
+#search__close:hover {
+  cursor: pointer;
+}
+
+#search__close {
+  position: absolute;
+  right: 20px;
+}
+
+/* Main Menu -----------------------*/
+.et-menu .menu-item-has-children>a:first-child:after {
+  top:-2px;
+}
+
+
+/* board page & staff page people layout -----------------------*/
+.board-members,
+.staff-members {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gutter);
+}
+
+h2.department {
+  color: black;
+  font-size: 1.5em;
+  text-align: center;
+  margin: 2em .25em .5em .25em;
+}
+
+.person h3 {
+  color: var(--navy);
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-block: 1.5rem .25rem;
+  padding: 0;
+  
+  
+}
+
+.person {
+  flex: 1 0 22%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 200px;
+  font-size: .95rem;
+  line-height: 1.5;
+}
+
+.person p {
+  margin-block: 0 .5rem;
+  color: #999;
+  text-wrap: balance;
+}
+
+.person img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 1em;
+}
+
+.person .et-pb-icon {
+  font-size: 1rem;
+}
+
+/* Form Styles */
+label {
+  font-family: 'Nexa Regular', Helvetica, Arial, Lucida, sans-serif !important;
+}
+
+.gform_legacy_markup_wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]) {
+  padding: 1rem !important;
+  font-size: 1.1rem;
+}
+
+.gform_legacy_markup_wrapper textarea {
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.gform_footer input[type=submit] {
+  font-size: 18px;
+  font-weight: 500;
+  font-family: var(--sans-font-1);
+  background-color: #ffffff;
+  border: 2px solid var(--primary);
+  border-radius: 50px;
+  color: var(--primary);
+  padding: .5rem 1rem .25rem !important;
+  display: inline-block;
+}
+.gform_footer input[type=submit]:hover {
+  background-color: var(--primary);
+  border-color: transparent;
+  color: white;
+}
+
+@media only screen and (min-width: 641px) {
+  .gform_legacy_markup_wrapper .top_label input.medium, .gform_legacy_markup_wrapper .top_label select.medium {
+      width: 100%;
+  }
+}
+
+/* Footer Extras --------- */
+.pre-footer-row {
+  justify-content: space-between;
+}
+.social-nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.social-nav .et-pb-icon {
+  color: white;
+  font-size: 24px;
+}
+
+/* Form Fields ----------- */
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  -webkit-appearance: none;
+  background-color: #eee;
+  border-width: 0;
+  border-radius: .5em !important;
+  color: #999;
+  font-size: 14px;
+  padding: 16px;
+  width: 100%;
+}
+
+/* Power Quote Section 
+.et_pb_section_1_tb_body {
+  background-color: var(--body-bg-alt);
+  padding-block: calc(var(--gutter) * 2);
+}
+*/
+.et_pb_section_1_tb_body h2 {
+  text-wrap: balance;
+}
+
+/* Repeater Item Defaults */
+.repeater-item h3 {
+  margin-block: 2rem .25rem;
+  font-size: 1.5rem;
+}
+.repeater-item h4 {
+  margin-block: 2rem .25rem;
+  font-size: 1.35rem;
+  color: var(--navy);
+}
+
+/* Repeater Circles -------- */
+.repeater-circles {
+  text-align: center;
+}
+.repeater-circles h2 {
+  color: var(--navy);
+  font-size: 1.7rem;  
+  margin-block: 2rem .25rem;
+}
+.repeater-circles p {
+  text-wrap: balance;
+}
+.repeater-item ul,
+.repeater-item ol {
+  padding-bottom: 0;
+}
+.repeater-item li {
+  margin-block: 0 .75rem;
+}
+
+
+@media (max-width: 767px) {
+  .repeater-circles .repeater-item {
+      padding-bottom: var(--gutter);
+  }
+}
+@media (min-width: 768px) {
+  .repeater-circles {
+      display: flex;
+      gap: var(--gutter);
+      justify-content: center;
+      flex-wrap: wrap;
+  }
+  .repeater-circles h2 {
+      font-size: 2rem;
+  }
+  .repeater-circles .repeater-item {
+      max-width: 350px;
+      width: 100%;
+      flex: 1;
+  }
+}
+/* Simple CTA Rows -------- */
+.simple-cta-rows {
+  display: flex;
+}
+.simple-cta-rows h2 {
+  font-size: 2.3rem;
+  margin-block: 0.4rem 0;
+  color: inherit;
+}
+.simple-cta-rows .repeater-item {
+  padding-block: calc(var(--gutter) * 1.5);
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+}
+
+@media (max-width: 600px) {
+  .simple-cta-rows {
+      flex-direction: column;
+  }
+}
+
+@media (min-width: 601px) {
+  .simple-cta-rows {
+      flex-wrap: wrap;
+  }
+}
+
+
+
+@media (min-width: 990px) {
+  .simple-cta-rows .repeater-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+}
+
+.simple-cta-rows .repeater-copy {
+  padding-inline: var(--gutter);
+  text-wrap: balance;
+}
+
+.simple-cta-rows .et_pb_button {
+  margin-top: var(--spacer);
+  display: inline-block;
+}
+
+/* Teaser Rows ------------ */
+.tease-rows h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--navy);
+}
+.tease-rows p {
+  text-wrap: balance;
+}
+.tease-rows .button {
+  margin-top: 1.4rem;
+}
+.tease-rows .repeater-item  .container {
+  text-align: left;
+  padding-inline: var(--spacer);
+  max-width: var(--container-tease-rows);
+}
+@media (min-width: 768px) {
+  .tease-rows h2 {
+      font-size: 2.2rem;
+  }
+  .tease-rows .repeater-item .container {
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gutter);
+      align-items: center;
+  }
+  .tease-rows .repeater-item:nth-child(even) .container img {
+      order: 3;
+  }
+  .tease-rows .repeater-item:nth-child(even) .container > div {
+      order: 1;
+  }
+  .tease-rows .repeater-item .container img {
+      margin-inline: auto;
+  }
+}
+
+
+#intro h2 {
+  text-wrap: balance;
+}
+
+body:not(.et-tb) #main-content .container, body:not(.et-tb-has-header) #main-content .container {
+  padding: 0 !important;
+}
+
+/* Main Nav Page Colors  -------------------- */
+/* Advisors */
+.page-id-14083 .et_pb_fullwidth_header.et_pb_fullwidth_header_0_tb_body,
+.page-id-14083 .et_pb_section_0_tb_body.et_pb_section {
+  background: #F4C736 !important;
+}
+/* Nonprofits */
+.page-id-14085 .et_pb_fullwidth_header.et_pb_fullwidth_header_0_tb_body,
+.page-id-14085 .et_pb_section_0_tb_body.et_pb_section {
+  background: #99BD60 !important;
+}
+/* Scholarships */
+.page-id-14089 .et_pb_fullwidth_header.et_pb_fullwidth_header_0_tb_body,
+.page-id-14089 .et_pb_section_0_tb_body.et_pb_section{
+  background: #364B95 !important;
+}
+
+/* Pages ------------------------------------ */
+.main-content .repeater-item  h2,
+.main-content .repeater-item  h2 {
+  font-size: 2.3rem;
+  margin-block: 2.4rem 0;
+  color: var(--navy);
+}
+.main-content .repeater-item  h3 {
+  font-size: 1.8rem;
+  margin-block: 2rem 0;
+  color: var(--primary);
+}
+/* Page: How to Apply for a Scholarship */
+.page-id-188 h2 {
+  color: var(--navy);
+}
+.page-id-188 .et_pb_section_2_tb_body {
+  background-color: var(--body-bg-alt);
+  background-image: url('/wp-content/uploads/Background-01.webp');
+}
+@media (min-width: 768px) {
+  .page-id-188 .et_pb_section_2_tb_body .repeater-item {
+      max-width: 45%;
+      width: 100%;
+  }
+}
+.page-id-188 .main-content .repeater-item {
+  padding-block: calc(var(--gutter) * .75);
+  max-width: 800px;
+  width: 100%;
+  margin-inline: auto;
+}
+.page-id-188 .main-content .repeater-item .text-box {
+  margin-bottom: var(--spacer);
+}
+
+/* Page: Financial Information Table */
+#demo table {
+  border: 1px solid #eee;
+  width: 100%;
+  margin-bottom: var(--spacer);
+}
+#demo table td,
+#demo table th {
+  border-collapse: collapse;
+  border: 1px solid #eee;
+  padding: .5rem 1rem;
+  background-color: var(--body-bg);
+  font-size: 1.1rem;
+}
+#demo table tr:nth-child(even) td,
+#demo table tr:nth-child(even) th {
+  background-color: var(--body-bg-alt);
+}
+.page-id-222 .main-content .repeater-item {
+  padding-bottom: var(--gutter);
+}
+
+/* Page: What to Give */
+/* .page-id-59  */
+.main-content {
+  max-width: 800px;
+  margin-inline: auto;
+}
+.page-id-59 .main-content h2,
+.page-id-247 .main-content h2 {
+  font-size: 2.3rem;
+  margin-block: 2.4rem 0;
+}
+.page-id-59 .main-content h3 {
+  font-size: 1.8rem;
+  margin-block: 1.4rem 0;
+}
+
+
+/* special hide/show note styles */
+.note {
+  font-size: 1.3em;
+}
+
+.note:hover {
+  cursor: pointer;
+}
+
+.note-text {
+  max-height: 0;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  border-left: 5px solid #007BFF;
+  transition: max-height 0.5s ease-in-out;
+  padding: 0 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.note-text.visible {
+  max-height: 500px;
+  padding: 10px;
+}
+
+
+
+/* accessibility table of info */
+#post-13786 h2 {
+  margin-top: 15px;
+  color: #666;
+}
+
+.accessibility-info {
+  border: 1px solid black;
+  margin: 0 auto;
+}
+
+.accessibility-info th,
+.accessibility-info td {
+  background-color: #fcfcfc;
+  padding: .25em 3em;
+  vertical-align: top;
+}
+
+.accessibility-info th {
+  padding-right: 0;
+  text-align: right;
+
+}
+
+/* ----- #info-page styles ------ */
+
+#info-page h1 {
+  font-size: 2.5em;   
+}
+
+#info-page h2 {
+  margin: 1em 0 0 0;
+}
+
+
+.ginput_container_select select {
+  -webkit-appearance: none;
+  background-color: #eee;
+  border-width: 0;
+  border-radius: .5em !important;
+  color: #999;
+  padding: .75rem !important;
+}
+.ginput_container_select {
+  position: relative;
+}
+.ginput_container_select:after {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 40%;
+  right: 8px;
+  border: solid black;
+      border-width: 0 3px 3px 0;
+      display: inline-block;
+      padding: 3px;
+  transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+  z-index: 1;
+}> div {
+      order: 1;
+  }
+  .tease-rows .repeater-item img {
+      margin-inline: auto;
+  }
+}
+
+
+@media (min-width: 981px) {
+  #main-content .container:before {
+      background: transparent; /* Get rid of border */
+  }
+}
+
+/* Home Page Customizations ---------- */
+/* Hero logomark */
+#home_hero h1 {
+  position: relative;
+  max-width: 560px;
+}
+#home_hero h1:after {
+  background-image: url('../../uploads/MuskegonLogo.webp');
+  content: "";
+  display: block;
+  height: 80px;
+  width: 80px;
+  background-size: cover;
+  position: absolute;
+  right:0;
+  top:0;
+}
+@media (max-width: 980px) {
+  #home_hero h1 {
+      max-width: 370px;
+  }
+  #home_hero h1:after {
+      height: 60px;
+      width: 60px;
+  }
+}
+@media (max-width: 676px) {
+  #home_hero h1 {
+      max-width: 330px;
+  }
+  #home_hero h1:after {
+      height: 40px;
+      width: 40px;
+  }
+}
+
+/* =============== Slider Customization ================= */
+
+.et_pb_container {
+  height: auto !important;
+  padding: 70px 0;
+  margin: 50px 0 !important;
+}
+
+/* Circle overlay */
+.et_pb_slide_overlay_container {
+  background-image: url('/wp-content/uploads/circlec.webp');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-bottom: 2px solid white;
+}
+/* Hack to cover up unsightly lines caused by the animation in the slider */
+.et_pb_slide_overlay_container:after {
+  display: block;
+  content: "";
+  height: 100%;
+  width: 100%;
+  border: 5px solid white;
+  z-index: 1;
+  margin-left: -6px;
+  margin-top: -6px;
+}
+
+#intro h2 {
+  text-wrap: balance;
+}
+
+
+
+/* Document Library ------------------------- */
+
+.doc-set {
+  padding: 0; 
+  margin-bottom: 100px;
+}
+
+.doc-set h2 {
+  text-align: center;
+  font-size: 40px;
+  color: #25408F;
+  font-weight: normal;
+}
+
+.doc-container {
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 10px; 
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  justify-content: center;
+}
+
+.doc {
+  width: 30%;  
+  color: white;
+  height: 70px;
+  display: flex; 
+}
+
+.doc a {
+  flex-grow: 1; 
+  background-color: #4CC0DA;
+  text-decoration: none; 
+  color: white; 
+  font-size: 0.8em;
+  border-radius: 35px; 
+  text-align: center;
+  align-items: center; 
+  display: flex;
+  justify-content: center;
+  line-height: 1.4em;
+  height: 100%;
+  width: 100%;
+  padding: 10px 20px; 
+}
+
+.doc a:hover {
+  background-color: #28a0bb;
+  color: white;
+}
+
+.doc-set:nth-child(3n+1) a {
+  background-color: #5DBF8A; 
+}
+
+.doc-set:nth-child(3n+1) a:hover {
+  background-color: #36875c;
+}
+
+.doc-set:nth-child(3n+2) a {
+  background-color: #25408F;
+}
+
+.doc-set:nth-child(3n+2) a:hover {
+  background-color: #0f276d;
+}
+
+
+
+/* ===================  Events Page Overrides ======================= */
+
+@media (min-width: 980px) {
+	.tribe-events-pg-template {
+	  margin-top: 110px !important;
+	}
+}
+
+@media (max-width: 979px) {
+	.tribe-events-pg-template {
+	  padding-top: 60px !important;
+	}
+}
+	
+.post-type-archive-tribe_events .et_pb_section_1_tb_header.et_pb_section--fixed {
+  border-bottom: 1px solid #eee !important;
+}
+.post-type-archive-tribe_events #et-boc .et-l .et-pb-icon {
+  font-size: 40px;
+}
+.post-type-archive-tribe_events #et-boc .et-l .et_pb_section.et_pb_section--with-menu {
+  padding:0 !important;
+}
+.post-type-archive-tribe_events #search__close .et-pb-icon {
+  font-size: 26px !important;
+}
+.admin-bar.post-type-archive-tribe_events  #search__bar.visible {
+  top: 0 !important;
+}
+
+
+/* 
+* footer styles - should move and consolidate with any footer styles above.
+* */
+#footer__row {
+padding-block: var(--spacer);
+display: grid;
+gap: var(--spacer);
+}
+#footer__row p,
+#footer__row address {
+    font-size: .86rem;
+}
+@media (min-width: 768px) {
+#footer__row {
+      display: grid;
+      grid-template-columns: 1.75fr 4fr 1fr !important;
+  }
+#footer__row > div {
+  width: auto !important;
+  
+}
+}
+
+#footer__row > div:nth-child(2) {
+margin-inline: auto;
+}
+
+#footer__row address {
+font-style: normal;
+}
+
+#footer__row .et-last-child ul {
+  margin: 0 auto;
+}
+#footer__row ul li {
+line-height: 1.3;
+}
+#footer__row .et-last-child img {
+  transform: scale(1.5);
+}
+
+/* ============= toggle pill items =================== */
+div.et_pb_toggle_item {
+  transition: background-color 0.3s ease-in-out; 
+}
+
+
+/* ============= misc styles =================== */
+header {
+	overflow-x: clip;
+}
+
+article.et_pb_post {
+	border-radius: .5em;
+	overflow: clip;
+}
+
+article.et_pb_post .et_pb_image_container img {
+	object-fit: cover;
+	height: 230px;
+	width: 100%;
+}
+.et_post_meta_wrapper {
+	text-align: center;
+}
+.et_pb_slide_overlay_container {
+	position: relative;
+}
+
+
+/* ============== search results page ================= */
+
+#search-results__header {
+  padding: 140px 0 70px 0;
+  background-image: url('../../uploads/CFM_About.jpg');
+}
+
+#search-results__header::after {
+    content: '';  
+    position: absolute;  
+    top: 0;  
+    left: 0;  
+    right: 0;  
+    bottom: 0;  
+    background-color: rgba(0, 0, 0, 0.5);  
+    z-index: 1; 
+}
+
+#search-results__header h1.et_pb_module_heading {
+  color: white !important;
+  padding: 20px 0;
+}
+
+
+#search-results__results {
+  padding: 0;
+}
+
+@media (max-width: 767px) {
+  #search-results__results {
+    padding: 30px 0;
+  }
+}
+
+#search-results__results a {
+  text-decoration: underline;
+}
+
+
+/* ====================== 404 not found ================= */
+
+@media (min-width: 980px) {
+	.error404 {
+	  margin-top: 110px !important;
+	}
+}
+
+@media (max-width: 979px) {
+	body.error404 {
+		margin-top: 0 !important;	
+	}
+	
+	body.error404 #et-main-area {
+		padding-top: 70px;
+	}
+  
+	body.error404 #info-page {
+		margin: 100px 0;
+	}
+}
+
+
+/* ====================== blog ================= */
+
+p.post-meta {
+	display: none;
+}
+
+@media (min-width: 980px) {
+	body.archive.category {
+		margin-top: 110px !important;
+	}
+}
+
+@media (max-width: 979px) {
+	body.archive.category {
+		margin-top: 0 !important;
+	}
+  
+	body.archive.category #et-main-area {
+		padding-top: 70px;
+	}
+}
+
+
+/* 
+======================================
+  3-column bullet lists for
+  - ambassadors page
+  - strategic grantmaking funds
+--------------------------------------
+*/
+
+.page-id-247 .main-content,
+.page-id-25790 .main-content {
+  max-width: 90%;
+}
+
+@media (min-width: 678px) {
+	
+  .page-id-247 .text-box ul,
+  .page-id-25790 .text-box ul {
+      margin-block: 0;
+      column-count: 3;
+      column-gap: var(--gutter);
+  }
+	
+  .page-id-247 .text-box ul > li,
+  .page-id-25790 .text-box ul > li {
+      margin-block: 0 .75rem;
+  }
+
+}
+
+
+/* ================ Strategic Grant Making Funds ================= */
+.fund-directory {
+	font-family: 'Arial', sans-serif;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	color: #333;
+}
+
+.fund-group {
+	margin-bottom: 40px;
+	padding-bottom: 30px;
+}
+
+.fund-group:last-child {
+	border-bottom: none;
+}
+
+.letter-heading {
+	font-size: 2.5rem;
+	font-weight: bold;
+	color: #2a5885;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #eaeaea;
+}
+
+.fund-columns {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 30px;
+}
+
+.fund-column {
+	flex: 1 1 300px;
+	min-width: 0; /* Prevents flex items from overflowing */
+}
+
+.fund-type {
+	font-size: 1.4rem;
+	font-weight: 600;
+	color: #444;
+	margin-bottom: 15px;
+	padding-bottom: 8px;
+	text-transform: capitalize;
+}
+
+.fund-list {
+	list-style-type: none;
+	padding-left: 0;
+	margin-top: 0;
+}
+
+.fund-list li {
+	padding: 8px 0;
+	transition: background-color 0.2s;
+}
+
+.fund-list li:hover {
+	background-color: #f9f9f9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.fund-column {
+		flex: 1 1 100%;
+	}
+
+	.letter-heading {
+		font-size: 2rem;
+	}
+
+	.fund-type {
+		font-size: 1.2rem;
+	}
+}
