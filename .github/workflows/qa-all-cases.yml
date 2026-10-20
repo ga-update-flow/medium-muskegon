@@ -57,9 +57,12 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages-${{ matrix.case }}
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-${{ matrix.case }}
       - name: Verify the live site against this branch
         env:
           BASE: ${{ steps.deployment.outputs.page_url }}
@@ -147,6 +150,9 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages-restore
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-restore
