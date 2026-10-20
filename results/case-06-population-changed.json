@@ -1,0 +1,57 @@
+{
+  "case": "case-06-population-changed",
+  "result": "PASS",
+  "run_id": "39477555933",
+  "time": "2026-10-20 19:07:14 UTC",
+  "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
+  "changed_files": [
+    "M grants/grant-opportunities/muskegon-lead-grants/index.html"
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "check": "Changed file is live and identical to the branch",
+      "detail": "grants/grant-opportunities/muskegon-lead-grants/index.html (last HTTP 200, 168449 bytes)"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [plain HTTP]",
+      "detail": "1 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [plain HTTP]",
+      "detail": "1 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [Chrome-rendered page]",
+      "detail": "1 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [Chrome-rendered page]",
+      "detail": "1 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what the live page now says",
+      "detail": "(Leading Efforts Against Discrimination) Giving Circle was organized to collectively fund initiatives in Muskegon County, specifically and i"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what it said before",
+      "detail": "(Leading Efforts Against Discrimination) Giving Circle was organized to collectively fund initiatives in Muskegon County, specifically and i"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "index.html (last HTTP 200)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "grants/index.html (last HTTP 200)"
+    }
+  ]
+}
