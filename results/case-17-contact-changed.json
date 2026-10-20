@@ -1,0 +1,77 @@
+{
+  "case": "case-17-contact-changed",
+  "result": "PASS",
+  "run_id": "39477555933",
+  "time": "2026-10-20 19:38:19 UTC",
+  "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
+  "changed_files": [
+    "M grants/grant-opportunities/watch-us-vote-grants/index.html"
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "check": "Changed file is live and identical to the branch",
+      "detail": "grants/grant-opportunities/watch-us-vote-grants/index.html (last HTTP 200, 174490 bytes)"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [plain HTTP]",
+      "detail": "3 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [plain HTTP]",
+      "detail": "2 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [Chrome-rendered page]",
+      "detail": "3 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [Chrome-rendered page]",
+      "detail": "2 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New links are on the live page [plain HTTP]",
+      "detail": "mailto:dwhitfield@muskegonfoundation.org"
+    },
+    {
+      "pass": true,
+      "check": "Old links are gone from the live page [plain HTTP]",
+      "detail": "mailto:grants@muskegonfoundation.org"
+    },
+    {
+      "pass": true,
+      "check": "New links are on the live page [Chrome-rendered page]",
+      "detail": "mailto:dwhitfield@muskegonfoundation.org"
+    },
+    {
+      "pass": true,
+      "check": "Old links are gone from the live page [Chrome-rendered page]",
+      "detail": "mailto:grants@muskegonfoundation.org"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what the live page now says",
+      "detail": "Questions? Contact Dana Whitfield, Grants Manager, at || dwhitfield@muskegonfoundation.org || or call 231-722-4538 ext. 214"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what it said before",
+      "detail": "Questions? Contact || grants@muskegonfoundation.org"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "index.html (last HTTP 200)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "grants/index.html (last HTTP 200)"
+    }
+  ]
+}

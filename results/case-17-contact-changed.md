@@ -1,0 +1,14 @@
+### case-17-contact-changed: PASS
+- PASS Changed file is live and identical to the branch - grants/grant-opportunities/watch-us-vote-grants/index.html (last HTTP 200, 174490 bytes)
+- PASS New text is visible on the live page [plain HTTP] - 3 line(s) added by this case, 0 missing
+- PASS Old text is gone from the live page [plain HTTP] - 2 line(s) removed by this case, 0 still shown
+- PASS New text is visible on the live page [Chrome-rendered page] - 3 line(s) added by this case, 0 missing
+- PASS Old text is gone from the live page [Chrome-rendered page] - 2 line(s) removed by this case, 0 still shown
+- PASS New links are on the live page [plain HTTP] - mailto:dwhitfield@muskegonfoundation.org
+- PASS Old links are gone from the live page [plain HTTP] - mailto:grants@muskegonfoundation.org
+- PASS New links are on the live page [Chrome-rendered page] - mailto:dwhitfield@muskegonfoundation.org
+- PASS Old links are gone from the live page [Chrome-rendered page] - mailto:grants@muskegonfoundation.org
+- PASS Examples of what the live page now says - Questions? Contact Dana Whitfield, Grants Manager, at || dwhitfield@muskegonfoundation.org || or call 231-722-4538 ext. 214
+- PASS Examples of what it said before - Questions? Contact || grants@muskegonfoundation.org
+- PASS Unchanged page is identical to the baseline - index.html (last HTTP 200)
+- PASS Unchanged page is identical to the baseline - grants/index.html (last HTTP 200)
