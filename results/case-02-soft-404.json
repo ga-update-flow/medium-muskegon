@@ -1,0 +1,57 @@
+{
+  "case": "case-02-soft-404",
+  "result": "PASS",
+  "run_id": "39477555933",
+  "time": "2026-10-20 18:50:09 UTC",
+  "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
+  "changed_files": [
+    "M community-empowerment-grants/index.html"
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "check": "Changed file is live and identical to the branch",
+      "detail": "community-empowerment-grants/index.html (last HTTP 200, 165471 bytes)"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [plain HTTP]",
+      "detail": "3 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [plain HTTP]",
+      "detail": "26 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [Chrome-rendered page]",
+      "detail": "3 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [Chrome-rendered page]",
+      "detail": "26 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what the live page now says",
+      "detail": "Page not found || Page not found || Sorry, the page you are looking for could not be found or may no longer exist."
+    },
+    {
+      "pass": true,
+      "check": "Examples of what it said before",
+      "detail": "Community Empowerment Grants - Community Foundation for Muskegon County || Community Empowerment Grants || These grants offer awards of up to $3,000 to support programs that strengthen partnerships, build relationships, and provide hope and opport"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "index.html (last HTTP 200)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "grants/index.html (last HTTP 200)"
+    }
+  ]
+}
