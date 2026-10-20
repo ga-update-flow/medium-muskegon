@@ -9,6 +9,11 @@ name: QA all cases
 
 on:
   workflow_dispatch:
+    inputs:
+      only:
+        description: 'Optional: only these case numbers, comma separated (example 12,5). Blank = all cases.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -29,8 +34,13 @@ jobs:
         with:
           fetch-depth: 0
       - id: m
+        env:
+          ONLY: ${{ github.event.inputs.only }}
         run: |
           cases=$(git for-each-ref --format='%(refname:short)' 'refs/remotes/origin/case-*' | sed 's#^origin/##' | sort | jq -R -s -c 'split("\n") | map(select(length>0))')
+          if [ -n "$ONLY" ]; then
+            cases=$(echo "$cases" | jq -c --arg only "$ONLY" '($only | split(",") | map(gsub(" ";"") | tonumber | (if . < 10 then "0" else "" end) + tostring)) as $n | map(select(. as $c | any($n[]; . as $x | $c | startswith("case-" + $x + "-"))))')
+          fi
           echo "cases=$cases" >> "$GITHUB_OUTPUT"
           echo "$cases"
 
@@ -111,7 +121,7 @@ jobs:
               last = None
               for _ in range(tries):
                   st, body = fetch(url)
-                  last = (st, len(body))
+                  last = (st, len(body), hashlib.sha256(body).hexdigest()[:10])
                   if test(st, body):
                       return True, last
                   time.sleep(10)
@@ -167,7 +177,7 @@ jobs:
                   continue
               want = git_show('HEAD', path)
               ok, last = wait_for(url, lambda s, b, want=want: s == 200 and hashlib.sha256(b).digest() == hashlib.sha256(want).digest())
-              add(ok, ('Changed' if st == 'M' else 'Added') + ' file is live and identical to the branch', '%s (last HTTP %s, %s bytes)' % (path, last[0], last[1]))
+              add(ok, ('Changed' if st == 'M' else 'Added') + ' file is live and identical to the branch', '%s (last HTTP %s, %s bytes, sha %s; branch sha %s, baseline sha %s)' % (path, last[0], last[1], last[2], hashlib.sha256(want).hexdigest()[:10], hashlib.sha256(git_show('baseline-v1', path) or b'').hexdigest()[:10]))
               if not path.endswith('.html'):
                   continue
               live_http = fetch(url)[1] if ok else b''
