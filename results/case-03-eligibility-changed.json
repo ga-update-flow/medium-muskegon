@@ -1,0 +1,57 @@
+{
+  "case": "case-03-eligibility-changed",
+  "result": "PASS",
+  "run_id": "39477555933",
+  "time": "2026-10-20 18:52:00 UTC",
+  "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
+  "changed_files": [
+    "M grants/grant-opportunities/watch-us-vote-grants/index.html"
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "check": "Changed file is live and identical to the branch",
+      "detail": "grants/grant-opportunities/watch-us-vote-grants/index.html (last HTTP 200, 174708 bytes)"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [plain HTTP]",
+      "detail": "4 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [plain HTTP]",
+      "detail": "4 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [Chrome-rendered page]",
+      "detail": "4 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [Chrome-rendered page]",
+      "detail": "4 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what the live page now says",
+      "detail": "Nonprofit organizations headquartered in Muskegon County with an annual operating budget under $250,000 || Neighborhood associations and volunteer-led community groups applying through a nonprofit fiscal sponsor || Youth-serving organizations and student-led civic clubs with an adult advisor"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what it said before",
+      "detail": "Any registered 501(c)(3) nonprofit organization || Churches || Schools"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "index.html (last HTTP 200)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "grants/index.html (last HTTP 200)"
+    }
+  ]
+}
