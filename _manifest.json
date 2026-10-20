@@ -57,7 +57,6 @@
   "about/our-stories/index.html": "https://muskegonfoundation.org/about/our-stories/",
   "about/financial-information/index.html": "https://muskegonfoundation.org/about/financial-information/",
   "newsletter-sign-up/index.html": "https://muskegonfoundation.org/newsletter-sign-up/",
-  "contact-us/index.html": "https://muskegonfoundation.org/contact-us/",
   "giving/index.html": "https://muskegonfoundation.org/giving/",
   "giving-options/index.html": "https://muskegonfoundation.org/giving-options/",
   "giving/how-to-start-a-fund/index.html": "https://muskegonfoundation.org/giving/how-to-start-a-fund/",
@@ -72,7 +71,6 @@
   "strategic-grantmaking-funds/index.html": "https://muskegonfoundation.org/strategic-grantmaking-funds/",
   "nonprofits/index.html": "https://muskegonfoundation.org/nonprofits/",
   "nonprofits/nonprofit-resources/index.html": "https://muskegonfoundation.org/nonprofits/nonprofit-resources/",
-  "events-workshops/index.html": "https://muskegonfoundation.org/events-workshops/",
   "nonprofits/nonprofit-agency-funds/index.html": "https://muskegonfoundation.org/nonprofits/nonprofit-agency-funds/",
   "scholarships/index.html": "https://muskegonfoundation.org/scholarships/",
   "scholarships/for-students/index.html": "https://muskegonfoundation.org/scholarships/for-students/",
@@ -7221,7 +7219,11 @@
   "wp-content/uploads/cropped-updated-GROW-logo-with-WBC-300x208.png": "https://muskegonfoundation.org/wp-content/uploads/cropped-updated-GROW-logo-with-WBC-300x208.png",
   "wp-content/uploads/et_temp/4-IMG_0759-scaled-674351_1080x675.jpg": "https://muskegonfoundation.org/wp-content/uploads/et_temp/4-IMG_0759-scaled-674351_1080x675.jpg",
   "wp-content/uploads/et_temp/FP-Pitch-Competition-600621_1080x675.png": "https://muskegonfoundation.org/wp-content/uploads/et_temp/FP-Pitch-Competition-600621_1080x675.png",
-  "wp-content/uploads/et_temp/Pete-BW-Resize-1-929841_1080x675.png": "https://muskegonfoundation.org/wp-content/uploads/et_temp/Pete-BW-Resize-1-929841_1080x675.png"
+  "wp-content/uploads/et_temp/Pete-BW-Resize-1-929841_1080x675.png": "https://muskegonfoundation.org/wp-content/uploads/et_temp/Pete-BW-Resize-1-929841_1080x675.png",
+  "contact-us/index.html": "https://muskegonfoundation.org/contact-us/",
+  "events-workshops/index.html": "https://muskegonfoundation.org/events-workshops/",
+  "events/2026-10-09/index.html": "https://muskegonfoundation.org/events/2026-10-09/",
+  "events/2026-10-08/index.html": "https://muskegonfoundation.org/events/2026-10-08/"
  },
  "failed": [
   {
