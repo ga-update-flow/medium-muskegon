@@ -1,15 +1,17 @@
 # Live QA of every test case in this repo.
-# For each case-* branch, one after another: publish it, then check the LIVE site against the branch:
-#   - every changed/added file is live and byte-identical to the branch, a removed page returns 404;
-#   - control pages that must not change (home, grants) are byte-identical to the baseline.
-# Finally the baseline (main) is published again. Results are in the run summary.
+# For each case-* branch, one after another: publish it, open the LIVE page (plain HTTP and a real headless Chrome), and check:
+#   - every changed/added file is live and byte-identical to the branch; a removed page returns 404;
+#   - text that the case ADDED is visible on the live page, text that the case REMOVED is gone;
+#   - a newly added document is linked from the page;
+#   - control pages that must not change (home, grants) are identical to the baseline.
+# Each result is saved to the qa-report branch (results/<case>.json and .md). Finally the baseline (main) is published again.
 name: QA all cases
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -35,7 +37,7 @@ jobs:
   qa:
     needs: list
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -63,18 +65,27 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages-${{ matrix.case }}
-      - name: Verify the live site against this branch
+      - name: Open the live pages and check them against this branch
         env:
           BASE: ${{ steps.deployment.outputs.page_url }}
           CASE: ${{ matrix.case }}
         run: |
           python3 - <<'PY'
-          import os, subprocess, sys, time, random, hashlib, urllib.request, urllib.error, urllib.parse
+          import os, re, sys, json, time, random, hashlib, difflib, tempfile, subprocess, urllib.request, urllib.error, urllib.parse
+          from html.parser import HTMLParser
           base = os.environ['BASE'].rstrip('/') + '/'
           case = os.environ['CASE']
+          tmp = os.environ.get('RUNNER_TEMP', '/tmp')
+
           def sh(*a):
               return subprocess.run(a, capture_output=True, text=True, check=True).stdout
+
+          def git_show(ref, path):
+              r = subprocess.run(['git', 'show', '%s:%s' % (ref, path)], capture_output=True)
+              return r.stdout if r.returncode == 0 else None
+
           changes = [l.split('\t', 1) for l in sh('git', '-c', 'core.quotepath=false', 'diff', '--name-status', '--no-renames', 'baseline-v1', 'HEAD').splitlines()]
+
           def url_for(path):
               if path == 'index.html':
                   rel = ''
@@ -83,16 +94,20 @@ jobs:
               else:
                   rel = path
               return base + urllib.parse.quote(rel, safe='/')
+
+          def bust(url):
+              return url + ('&' if '?' in url else '?') + 'qa=%d' % random.randint(1, 10**9)
+
           def fetch(url):
-              u = url + ('&' if '?' in url else '?') + 'qa=%d' % random.randint(1, 10**9)
               try:
-                  r = urllib.request.urlopen(urllib.request.Request(u, headers={'User-Agent': 'case-qa', 'Cache-Control': 'no-cache'}), timeout=60)
+                  r = urllib.request.urlopen(urllib.request.Request(bust(url), headers={'User-Agent': 'case-qa', 'Cache-Control': 'no-cache'}), timeout=60)
                   return r.status, r.read()
               except urllib.error.HTTPError as e:
                   return e.code, b''
               except Exception:
                   return 0, b''
-          def wait_for(url, test, tries=24):
+
+          def wait_for(url, test, tries=60):
               last = None
               for _ in range(tries):
                   st, body = fetch(url)
@@ -101,35 +116,146 @@ jobs:
                       return True, last
                   time.sleep(10)
               return False, last
-          results = []
-          ok = True
+
+          class Text(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.skip = 0
+                  self.lines = []
+              def handle_starttag(self, tag, attrs):
+                  if tag in ('script', 'style', 'noscript', 'template'):
+                      self.skip += 1
+              def handle_endtag(self, tag):
+                  if tag in ('script', 'style', 'noscript', 'template') and self.skip:
+                      self.skip -= 1
+              def handle_data(self, data):
+                  if self.skip:
+                      return
+                  s = re.sub(r'[\s\xa0]+', ' ', data).strip()
+                  if s:
+                      self.lines.append(s)
+
+          def text_lines(raw):
+              p = Text()
+              p.feed(raw.decode('utf-8', 'replace') if isinstance(raw, bytes) else raw)
+              return p.lines
+
+          def chrome_dom(url):
+              for _ in range(3):
+                  d = tempfile.mkdtemp()
+                  try:
+                      r = subprocess.run(['google-chrome', '--headless=new', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage',
+                                          '--user-data-dir=' + d, '--virtual-time-budget=15000', '--dump-dom', bust(url)],
+                                         capture_output=True, timeout=120)
+                      if r.returncode == 0 and len(r.stdout) > 200:
+                          return r.stdout
+                  except Exception:
+                      pass
+                  time.sleep(5)
+              return None
+
+          checks = []
+          def add(ok, name, detail=''):
+              checks.append({'pass': bool(ok), 'check': name, 'detail': detail})
+
           for st, path in changes:
               url = url_for(path)
               if st == 'D':
-                  passed, last = wait_for(url, lambda s, b: s == 404)
-                  what = 'removed page returns 404'
-              else:
-                  want = open(path, 'rb').read()
-                  passed, last = wait_for(url, lambda s, b, want=want: s == 200 and hashlib.sha256(b).digest() == hashlib.sha256(want).digest())
-                  what = ('changed' if st == 'M' else 'added') + ' file is live and identical to the branch'
-              results.append((passed, what, path, last))
-              ok = ok and passed
+                  ok, last = wait_for(url, lambda s, b: s == 404)
+                  add(ok, 'Removed page returns 404 on the live site', '%s -> HTTP %s' % (url, last[0]))
+                  chrome = chrome_dom(url)
+                  continue
+              want = git_show('HEAD', path)
+              ok, last = wait_for(url, lambda s, b, want=want: s == 200 and hashlib.sha256(b).digest() == hashlib.sha256(want).digest())
+              add(ok, ('Changed' if st == 'M' else 'Added') + ' file is live and identical to the branch', '%s (last HTTP %s, %s bytes)' % (path, last[0], last[1]))
+              if not path.endswith('.html'):
+                  continue
+              live_http = fetch(url)[1] if ok else b''
+              live_chrome = chrome_dom(url) if ok else None
+              new_lines = text_lines(want)
+              old_raw = git_show('baseline-v1', path)
+              old_lines = text_lines(old_raw) if old_raw is not None else []
+              sm = difflib.SequenceMatcher(None, old_lines, new_lines, autojunk=False)
+              removed, added = [], []
+              for tag, i1, i2, j1, j2 in sm.get_opcodes():
+                  if tag in ('replace', 'delete'):
+                      removed += old_lines[i1:i2]
+                  if tag in ('replace', 'insert'):
+                      added += new_lines[j1:j2]
+              removed = [l for l in removed if l not in set(new_lines)]
+              added = [l for l in added if l not in set(old_lines)]
+              for label, raw in (('plain HTTP', live_http), ('Chrome-rendered page', live_chrome)):
+                  if not raw:
+                      add(False, 'Could not open %s (%s)' % (path, label))
+                      continue
+                  live = set(text_lines(raw))
+                  missing = [l for l in added if l not in live]
+                  leftover = [l for l in removed if l in live]
+                  add(not missing, 'New text is visible on the live page [%s]' % label, '%d line(s) added by this case, %d missing%s' % (len(added), len(missing), (': ' + ' | '.join(m[:90] for m in missing[:3])) if missing else ''))
+                  add(not leftover, 'Old text is gone from the live page [%s]' % label, '%d line(s) removed by this case, %d still shown%s' % (len(removed), len(leftover), (': ' + ' | '.join(m[:90] for m in leftover[:3])) if leftover else ''))
+              hrefs = lambda raw: set(re.findall(rb'href="([^"#]+)"', raw))
+              old_h, new_h = hrefs(old_raw or b''), hrefs(want)
+              gone_h, new_only_h = sorted(old_h - new_h), sorted(new_h - old_h)
+              for label, raw in (('plain HTTP', live_http), ('Chrome-rendered page', live_chrome)):
+                  if raw and (gone_h or new_only_h):
+                      lh = hrefs(raw if isinstance(raw, bytes) else raw.encode())
+                      add(all(h in lh for h in new_only_h), 'New links are on the live page [%s]' % label, ', '.join(h.decode()[:90] for h in new_only_h[:3]))
+                      add(not any(h in lh for h in gone_h), 'Old links are gone from the live page [%s]' % label, ', '.join(h.decode()[:90] for h in gone_h[:3]))
+              sample = added[:3] if added else []
+              if sample:
+                  add(True, 'Examples of what the live page now says', ' || '.join(s[:140] for s in sample))
+              if removed:
+                  add(True, 'Examples of what it said before', ' || '.join(s[:140] for s in removed[:3]))
+              # a document added by this case must be linked from the changed page
+              for st2, p2 in changes:
+                  if st2 == 'A' and not p2.endswith('.html'):
+                      name = os.path.basename(p2)
+                      linked = name.encode() in want or urllib.parse.quote(name).encode() in want
+                      add(linked, 'Page links the new document', name)
+
           changed_paths = set(p for _, p in changes)
           for path in ['index.html', 'grants/index.html']:
               if path in changed_paths or not os.path.exists(path):
                   continue
               want = open(path, 'rb').read()
-              passed, last = wait_for(url_for(path), lambda s, b, want=want: s == 200 and b == want, tries=3)
-              results.append((passed, 'unchanged control page identical to baseline', path, last))
-              ok = ok and passed
-          lines = ['### %s: %s' % (case, 'PASS' if ok else 'FAIL')]
-          for p, w, path, last in results:
-              lines.append('- %s %s: `%s` %s' % ('PASS' if p else 'FAIL', w, path, '' if p else last))
-          print('\n'.join(lines))
+              ok, last = wait_for(url_for(path), lambda s, b, want=want: s == 200 and b == want, tries=6)
+              add(ok, 'Unchanged page is identical to the baseline', '%s (last HTTP %s)' % (path, last[0]))
+
+          ok_all = all(c['pass'] for c in checks)
+          result = {'case': case, 'result': 'PASS' if ok_all else 'FAIL', 'run_id': os.environ.get('GITHUB_RUN_ID'),
+                    'time': time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime()), 'live_url': base,
+                    'changed_files': ['%s %s' % (s, p) for s, p in changes], 'checks': checks}
+          json.dump(result, open(os.path.join(tmp, 'result.json'), 'w'), indent=2)
+          md = ['### %s: %s' % (case, result['result'])] + ['- %s %s%s' % ('PASS' if c['pass'] else 'FAIL', c['check'], (' - ' + c['detail']) if c['detail'] else '') for c in checks]
+          open(os.path.join(tmp, 'result.md'), 'w').write('\n'.join(md) + '\n')
+          print('\n'.join(md))
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
-              f.write('\n'.join(lines) + '\n')
-          sys.exit(0 if ok else 1)
+              f.write('\n'.join(md) + '\n')
+          sys.exit(0 if ok_all else 1)
           PY
+      - name: Save the result to the qa-report branch
+        if: always()
+        env:
+          CASE: ${{ matrix.case }}
+        run: |
+          [ -f "$RUNNER_TEMP/result.json" ] || exit 0
+          URL="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          cd "$RUNNER_TEMP"
+          for i in 1 2 3 4 5; do
+            rm -rf rep
+            if git ls-remote --exit-code --heads "$URL" qa-report >/dev/null 2>&1; then
+              git clone -q --depth 1 -b qa-report "$URL" rep
+            else
+              mkdir rep && git -C rep init -q -b qa-report && git -C rep remote add origin "$URL"
+            fi
+            mkdir -p rep/results
+            cp result.json "rep/results/$CASE.json"
+            cp result.md "rep/results/$CASE.md"
+            git -C rep add -A
+            git -C rep -c user.name=qa-bot -c user.email=qa-bot@users.noreply.github.com commit -q -m "QA result $CASE (run $GITHUB_RUN_ID)" || true
+            git -C rep push -q origin qa-report && break
+            sleep 5
+          done
 
   restore:
     needs: qa
