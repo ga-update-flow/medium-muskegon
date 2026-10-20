@@ -1,0 +1,57 @@
+{
+  "case": "case-08-funding-decreased",
+  "result": "PASS",
+  "run_id": "39477555933",
+  "time": "2026-10-20 19:20:11 UTC",
+  "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
+  "changed_files": [
+    "M grants/grant-opportunities/muskegon-lead-grants/index.html"
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "check": "Changed file is live and identical to the branch",
+      "detail": "grants/grant-opportunities/muskegon-lead-grants/index.html (last HTTP 200, 168317 bytes)"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [plain HTTP]",
+      "detail": "1 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [plain HTTP]",
+      "detail": "1 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [Chrome-rendered page]",
+      "detail": "1 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [Chrome-rendered page]",
+      "detail": "1 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what the live page now says",
+      "detail": "Future plans and dreams for work that will create a just, diverse, inclusive, and equitable community, including how a grant of $2,500 \u2013 $3,"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what it said before",
+      "detail": "Future plans and dreams for work that will create a just, diverse, inclusive, and equitable community, including how a grant of $5,000 \u2013 $7,"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "index.html (last HTTP 200)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "grants/index.html (last HTTP 200)"
+    }
+  ]
+}
