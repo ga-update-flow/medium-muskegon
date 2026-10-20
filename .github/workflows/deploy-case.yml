@@ -2,6 +2,11 @@
 #   case_branch = main                       -> the baseline (baseline-v1 content)
 #   case_branch = case-12-application-...    -> that test case
 # Only site files are published; .git and .github are never part of the website.
+#
+# The run only turns GREEN once the LIVE site really serves the branch (every file any case touches is checked,
+# as a plain URL and as a cache-busted URL, 3 clean rounds in a row). If GitHub Pages is slow, the workflow
+# keeps waiting, redeploys once if needed, and turns RED if the site still is not right.
+# So: trigger this workflow, wait for green, THEN start the update flow.
 name: Deploy case
 
 on:
@@ -24,6 +29,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -37,6 +43,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.case_branch }}
+          fetch-depth: 0
       - name: Stage site files only
         run: |
           mkdir _site
@@ -45,6 +52,209 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages-a
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-a
+      - name: Wait until the live site serves this branch
+        id: live1
+        continue-on-error: true
+        env:
+          BASE: ${{ steps.deployment.outputs.page_url }}
+          REF: HEAD
+          DEADLINE_SECONDS: "420"
+        run: |
+          python3 - <<'PY'
+          """Block until the LIVE site really serves the ref that was just deployed, then exit 0. Exit 1 on timeout.
+          Checks every file that ANY test case touches (plus home + grants), so a switch from one case to another,
+          or back to main, is fully confirmed. Each file is fetched twice per round: as a plain URL (what the update flow
+          does) and with a cache-busting query. N consecutive clean rounds are required."""
+          import hashlib, os, random, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
+          from concurrent.futures import ThreadPoolExecutor
+
+          BASE = os.environ["BASE"].rstrip("/") + "/"
+          REF = os.environ.get("REF", "HEAD")
+          DEADLINE = int(os.environ.get("DEADLINE_SECONDS", "480"))
+          INTERVAL = int(os.environ.get("INTERVAL_SECONDS", "10"))
+          NEED = int(os.environ.get("CONSECUTIVE", "3"))
+          CONTROLS = ["index.html", "grants/index.html"]
+
+
+          def git(*a):
+              return subprocess.run(["git", "-c", "core.quotepath=false", *a], capture_output=True)
+
+
+          def touched():
+              paths = set()
+              refs = [r for r in git("for-each-ref", "--format=%(refname)", "refs/remotes/origin/case-*").stdout.decode().split() if r]
+              for r in refs + [REF]:
+                  out = git("diff", "--name-only", "--no-renames", "baseline-v1", r).stdout.decode()
+                  paths.update(l for l in out.splitlines() if l and not l.startswith(('.github/', '_manifest', '.gitattributes', '.nojekyll', 'README')))
+              paths.update(CONTROLS)
+              return sorted(paths)
+
+
+          def expected(path):
+              r = git("show", "%s:%s" % (REF, path))
+              return r.stdout if r.returncode == 0 else None
+
+
+          def url_for(path):
+              rel = "" if path == "index.html" else path[: -len("index.html")] if path.endswith("/index.html") else path
+              return BASE + urllib.parse.quote(rel, safe="/")
+
+
+          def fetch(url, bust):
+              u = url + (("&" if "?" in url else "?") + "qa=%d" % random.randint(1, 10**9) if bust else "")
+              try:
+                  r = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "wait-live"}), timeout=60)
+                  return r.status, r.read()
+              except urllib.error.HTTPError as e:
+                  return e.code, b""
+              except Exception:
+                  return 0, b""
+
+
+          def check(item):
+              path, want = item
+              bad = []
+              for bust in (False, True):
+                  st, body = fetch(url_for(path), bust)
+                  ok = (st == 404) if want is None else (st == 200 and hashlib.sha256(body).digest() == hashlib.sha256(want).digest())
+                  if not ok:
+                      bad.append("%s%s -> HTTP %s" % (path, " (cache-busted)" if bust else " (plain URL)", st))
+              return bad
+
+
+          def main():
+              items = [(p, expected(p)) for p in touched()]
+              print("verifying %d files against %s on %s" % (len(items), REF, BASE), flush=True)
+              start, clean, rnd = time.time(), 0, 0
+              last_bad = []
+              while time.time() - start < DEADLINE:
+                  rnd += 1
+                  with ThreadPoolExecutor(8) as ex:
+                      bad = [b for res in ex.map(check, items) for b in res]
+                  if not bad:
+                      clean += 1
+                      print("round %d: all %d files correct (%d/%d clean rounds)" % (rnd, len(items), clean, NEED), flush=True)
+                      if clean >= NEED:
+                          print("LIVE after %ds" % (time.time() - start), flush=True)
+                          return 0
+                  else:
+                      clean, last_bad = 0, bad
+                      print("round %d: %d file(s) not live yet, e.g. %s" % (rnd, len(bad), bad[0]), flush=True)
+                  time.sleep(INTERVAL)
+              print("NOT LIVE after %ds. Still wrong: %s" % (DEADLINE, "; ".join(last_bad[:10])), flush=True)
+              return 1
+
+
+          sys.exit(main())
+          PY
+      - name: Publish again (the live site was still stale)
+        if: steps.live1.outcome == 'failure'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages-b
+          path: _site
+      - id: deployment2
+        if: steps.live1.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-b
+      - name: Wait again after the second publish
+        if: steps.live1.outcome == 'failure'
+        env:
+          BASE: ${{ steps.deployment.outputs.page_url }}
+          REF: HEAD
+          DEADLINE_SECONDS: "720"
+        run: |
+          python3 - <<'PY'
+          """Block until the LIVE site really serves the ref that was just deployed, then exit 0. Exit 1 on timeout.
+          Checks every file that ANY test case touches (plus home + grants), so a switch from one case to another,
+          or back to main, is fully confirmed. Each file is fetched twice per round: as a plain URL (what the update flow
+          does) and with a cache-busting query. N consecutive clean rounds are required."""
+          import hashlib, os, random, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
+          from concurrent.futures import ThreadPoolExecutor
+
+          BASE = os.environ["BASE"].rstrip("/") + "/"
+          REF = os.environ.get("REF", "HEAD")
+          DEADLINE = int(os.environ.get("DEADLINE_SECONDS", "480"))
+          INTERVAL = int(os.environ.get("INTERVAL_SECONDS", "10"))
+          NEED = int(os.environ.get("CONSECUTIVE", "3"))
+          CONTROLS = ["index.html", "grants/index.html"]
+
+
+          def git(*a):
+              return subprocess.run(["git", "-c", "core.quotepath=false", *a], capture_output=True)
+
+
+          def touched():
+              paths = set()
+              refs = [r for r in git("for-each-ref", "--format=%(refname)", "refs/remotes/origin/case-*").stdout.decode().split() if r]
+              for r in refs + [REF]:
+                  out = git("diff", "--name-only", "--no-renames", "baseline-v1", r).stdout.decode()
+                  paths.update(l for l in out.splitlines() if l and not l.startswith(('.github/', '_manifest', '.gitattributes', '.nojekyll', 'README')))
+              paths.update(CONTROLS)
+              return sorted(paths)
+
+
+          def expected(path):
+              r = git("show", "%s:%s" % (REF, path))
+              return r.stdout if r.returncode == 0 else None
+
+
+          def url_for(path):
+              rel = "" if path == "index.html" else path[: -len("index.html")] if path.endswith("/index.html") else path
+              return BASE + urllib.parse.quote(rel, safe="/")
+
+
+          def fetch(url, bust):
+              u = url + (("&" if "?" in url else "?") + "qa=%d" % random.randint(1, 10**9) if bust else "")
+              try:
+                  r = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "wait-live"}), timeout=60)
+                  return r.status, r.read()
+              except urllib.error.HTTPError as e:
+                  return e.code, b""
+              except Exception:
+                  return 0, b""
+
+
+          def check(item):
+              path, want = item
+              bad = []
+              for bust in (False, True):
+                  st, body = fetch(url_for(path), bust)
+                  ok = (st == 404) if want is None else (st == 200 and hashlib.sha256(body).digest() == hashlib.sha256(want).digest())
+                  if not ok:
+                      bad.append("%s%s -> HTTP %s" % (path, " (cache-busted)" if bust else " (plain URL)", st))
+              return bad
+
+
+          def main():
+              items = [(p, expected(p)) for p in touched()]
+              print("verifying %d files against %s on %s" % (len(items), REF, BASE), flush=True)
+              start, clean, rnd = time.time(), 0, 0
+              last_bad = []
+              while time.time() - start < DEADLINE:
+                  rnd += 1
+                  with ThreadPoolExecutor(8) as ex:
+                      bad = [b for res in ex.map(check, items) for b in res]
+                  if not bad:
+                      clean += 1
+                      print("round %d: all %d files correct (%d/%d clean rounds)" % (rnd, len(items), clean, NEED), flush=True)
+                      if clean >= NEED:
+                          print("LIVE after %ds" % (time.time() - start), flush=True)
+                          return 0
+                  else:
+                      clean, last_bad = 0, bad
+                      print("round %d: %d file(s) not live yet, e.g. %s" % (rnd, len(bad), bad[0]), flush=True)
+                  time.sleep(INTERVAL)
+              print("NOT LIVE after %ds. Still wrong: %s" % (DEADLINE, "; ".join(last_bad[:10])), flush=True)
+              return 1
+
+
+          sys.exit(main())
+          PY
