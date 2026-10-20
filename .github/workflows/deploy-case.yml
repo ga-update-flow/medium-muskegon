@@ -1,0 +1,50 @@
+# Publishes ONE branch of this repo to GitHub Pages at the SAME URL every time.
+#   case_branch = main                       -> the baseline (baseline-v1 content)
+#   case_branch = case-12-application-...    -> that test case
+# Only site files are published; .git and .github are never part of the website.
+name: Deploy case
+
+on:
+  workflow_dispatch:
+    inputs:
+      case_branch:
+        description: "Branch to publish: main (baseline) or a case-NN-... branch"
+        required: true
+        default: main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Only main or case branches
+        run: |
+          case "${{ inputs.case_branch }}" in
+            main|case-*) echo "publishing ${{ inputs.case_branch }}" ;;
+            *) echo "refusing to publish '${{ inputs.case_branch }}' (use main or case-NN-...)"; exit 1 ;;
+          esac
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.case_branch }}
+      - name: Stage site files only
+        run: |
+          mkdir _site
+          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' ./ _site/
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
