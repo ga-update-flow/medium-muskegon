@@ -1,27 +1,37 @@
 {
   "case": "case-05-focus-areas-changed",
-  "result": "FAIL",
-  "run_id": "39477555933",
-  "time": "2026-10-20 19:04:50 UTC",
+  "result": "PASS",
+  "run_id": "39486417000",
+  "time": "2026-10-20 19:49:28 UTC",
   "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
   "changed_files": [
     "M building-an-inclusive-community-mini-grants/index.html"
   ],
   "checks": [
     {
-      "pass": false,
+      "pass": true,
       "check": "Changed file is live and identical to the branch",
-      "detail": "building-an-inclusive-community-mini-grants/index.html (last HTTP 200, 230046 bytes)"
+      "detail": "building-an-inclusive-community-mini-grants/index.html (last HTTP 200, 230029 bytes, sha 636549765a; branch sha 636549765a, baseline sha 2f279dee88)"
     },
     {
-      "pass": false,
-      "check": "Could not open building-an-inclusive-community-mini-grants/index.html (plain HTTP)",
-      "detail": ""
+      "pass": true,
+      "check": "New text is visible on the live page [plain HTTP]",
+      "detail": "3 line(s) added by this case, 0 missing"
     },
     {
-      "pass": false,
-      "check": "Could not open building-an-inclusive-community-mini-grants/index.html (Chrome-rendered page)",
-      "detail": ""
+      "pass": true,
+      "check": "Old text is gone from the live page [plain HTTP]",
+      "detail": "3 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [Chrome-rendered page]",
+      "detail": "3 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [Chrome-rendered page]",
+      "detail": "3 line(s) removed by this case, 0 still shown"
     },
     {
       "pass": true,
