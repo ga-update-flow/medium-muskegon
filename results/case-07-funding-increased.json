@@ -1,27 +1,37 @@
 {
   "case": "case-07-funding-increased",
-  "result": "FAIL",
-  "run_id": "39477555933",
-  "time": "2026-10-20 19:18:32 UTC",
+  "result": "PASS",
+  "run_id": "39486417000",
+  "time": "2026-10-20 19:51:27 UTC",
   "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
   "changed_files": [
     "M grants/grant-opportunities/watch-us-vote-grants/index.html"
   ],
   "checks": [
     {
-      "pass": false,
+      "pass": true,
       "check": "Changed file is live and identical to the branch",
-      "detail": "grants/grant-opportunities/watch-us-vote-grants/index.html (last HTTP 200, 174418 bytes)"
+      "detail": "grants/grant-opportunities/watch-us-vote-grants/index.html (last HTTP 200, 174418 bytes, sha 80103d2166; branch sha 80103d2166, baseline sha 843fd4ef7b)"
     },
     {
-      "pass": false,
-      "check": "Could not open grants/grant-opportunities/watch-us-vote-grants/index.html (plain HTTP)",
-      "detail": ""
+      "pass": true,
+      "check": "New text is visible on the live page [plain HTTP]",
+      "detail": "1 line(s) added by this case, 0 missing"
     },
     {
-      "pass": false,
-      "check": "Could not open grants/grant-opportunities/watch-us-vote-grants/index.html (Chrome-rendered page)",
-      "detail": ""
+      "pass": true,
+      "check": "Old text is gone from the live page [plain HTTP]",
+      "detail": "1 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [Chrome-rendered page]",
+      "detail": "1 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [Chrome-rendered page]",
+      "detail": "1 line(s) removed by this case, 0 still shown"
     },
     {
       "pass": true,
