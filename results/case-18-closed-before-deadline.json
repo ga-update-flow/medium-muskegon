@@ -1,0 +1,57 @@
+{
+  "case": "case-18-closed-before-deadline",
+  "result": "PASS",
+  "run_id": "39477555933",
+  "time": "2026-10-20 19:40:04 UTC",
+  "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
+  "changed_files": [
+    "M grants/grant-opportunities/watch-us-vote-grants/index.html"
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "check": "Changed file is live and identical to the branch",
+      "detail": "grants/grant-opportunities/watch-us-vote-grants/index.html (last HTTP 200, 174523 bytes)"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [plain HTTP]",
+      "detail": "2 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [plain HTTP]",
+      "detail": "2 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [Chrome-rendered page]",
+      "detail": "2 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [Chrome-rendered page]",
+      "detail": "2 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what the live page now says",
+      "detail": "All funds for this program were awarded before the March 1, 2027 deadline, and the Community Foundation is no longer accepting Watch Us Vote || Thank you for your interest and support."
+    },
+    {
+      "pass": true,
+      "check": "Examples of what it said before",
+      "detail": "Grants will be available until funds are depleted or until August 1, 2026. || Plan and apply early!"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "index.html (last HTTP 200)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "grants/index.html (last HTTP 200)"
+    }
+  ]
+}
