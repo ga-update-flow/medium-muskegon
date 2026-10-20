@@ -1,0 +1,47 @@
+{
+  "case": "case-07-funding-increased",
+  "result": "FAIL",
+  "run_id": "39477555933",
+  "time": "2026-10-20 19:18:32 UTC",
+  "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
+  "changed_files": [
+    "M grants/grant-opportunities/watch-us-vote-grants/index.html"
+  ],
+  "checks": [
+    {
+      "pass": false,
+      "check": "Changed file is live and identical to the branch",
+      "detail": "grants/grant-opportunities/watch-us-vote-grants/index.html (last HTTP 200, 174418 bytes)"
+    },
+    {
+      "pass": false,
+      "check": "Could not open grants/grant-opportunities/watch-us-vote-grants/index.html (plain HTTP)",
+      "detail": ""
+    },
+    {
+      "pass": false,
+      "check": "Could not open grants/grant-opportunities/watch-us-vote-grants/index.html (Chrome-rendered page)",
+      "detail": ""
+    },
+    {
+      "pass": true,
+      "check": "Examples of what the live page now says",
+      "detail": "The Community Foundation invites all Muskegon County Nonprofits to apply for Watch Us Vote Mini\u2011Grants, providing up to $2,500 to support no"
+    },
+    {
+      "pass": true,
+      "check": "Examples of what it said before",
+      "detail": "The Community Foundation invites all Muskegon County Nonprofits to apply for Watch Us Vote Mini\u2011Grants, providing up to $1,000 to support no"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "index.html (last HTTP 200)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "grants/index.html (last HTTP 200)"
+    }
+  ]
+}
