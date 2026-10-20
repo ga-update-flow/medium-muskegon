@@ -1,0 +1,14 @@
+### case-15-rfp-replaced: PASS
+- PASS Changed file is live and identical to the branch - professional-advisors/online-egrant-instructions-2016/index.html (last HTTP 200, 181117 bytes)
+- PASS New text is visible on the live page [plain HTTP] - 0 line(s) added by this case, 0 missing
+- PASS Old text is gone from the live page [plain HTTP] - 0 line(s) removed by this case, 0 still shown
+- PASS New text is visible on the live page [Chrome-rendered page] - 0 line(s) added by this case, 0 missing
+- PASS Old text is gone from the live page [Chrome-rendered page] - 0 line(s) removed by this case, 0 still shown
+- PASS New links are on the live page [plain HTTP] - ../../wp-content/uploads/Online-eGrant-Instructions-2027.pdf
+- PASS Old links are gone from the live page [plain HTTP] - ../../wp-content/uploads/Online-eGrant-Instructions-2016.pdf
+- PASS New links are on the live page [Chrome-rendered page] - ../../wp-content/uploads/Online-eGrant-Instructions-2027.pdf
+- PASS Old links are gone from the live page [Chrome-rendered page] - ../../wp-content/uploads/Online-eGrant-Instructions-2016.pdf
+- PASS Page links the new document - Online-eGrant-Instructions-2027.pdf
+- PASS Added file is live and identical to the branch - wp-content/uploads/Online-eGrant-Instructions-2027.pdf (last HTTP 200, 2028372 bytes)
+- PASS Unchanged page is identical to the baseline - index.html (last HTTP 200)
+- PASS Unchanged page is identical to the baseline - grants/index.html (last HTTP 200)

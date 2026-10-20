@@ -1,0 +1,78 @@
+{
+  "case": "case-15-rfp-replaced",
+  "result": "PASS",
+  "run_id": "39477555933",
+  "time": "2026-10-20 19:34:48 UTC",
+  "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
+  "changed_files": [
+    "M professional-advisors/online-egrant-instructions-2016/index.html",
+    "A wp-content/uploads/Online-eGrant-Instructions-2027.pdf"
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "check": "Changed file is live and identical to the branch",
+      "detail": "professional-advisors/online-egrant-instructions-2016/index.html (last HTTP 200, 181117 bytes)"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [plain HTTP]",
+      "detail": "0 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [plain HTTP]",
+      "detail": "0 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New text is visible on the live page [Chrome-rendered page]",
+      "detail": "0 line(s) added by this case, 0 missing"
+    },
+    {
+      "pass": true,
+      "check": "Old text is gone from the live page [Chrome-rendered page]",
+      "detail": "0 line(s) removed by this case, 0 still shown"
+    },
+    {
+      "pass": true,
+      "check": "New links are on the live page [plain HTTP]",
+      "detail": "../../wp-content/uploads/Online-eGrant-Instructions-2027.pdf"
+    },
+    {
+      "pass": true,
+      "check": "Old links are gone from the live page [plain HTTP]",
+      "detail": "../../wp-content/uploads/Online-eGrant-Instructions-2016.pdf"
+    },
+    {
+      "pass": true,
+      "check": "New links are on the live page [Chrome-rendered page]",
+      "detail": "../../wp-content/uploads/Online-eGrant-Instructions-2027.pdf"
+    },
+    {
+      "pass": true,
+      "check": "Old links are gone from the live page [Chrome-rendered page]",
+      "detail": "../../wp-content/uploads/Online-eGrant-Instructions-2016.pdf"
+    },
+    {
+      "pass": true,
+      "check": "Page links the new document",
+      "detail": "Online-eGrant-Instructions-2027.pdf"
+    },
+    {
+      "pass": true,
+      "check": "Added file is live and identical to the branch",
+      "detail": "wp-content/uploads/Online-eGrant-Instructions-2027.pdf (last HTTP 200, 2028372 bytes)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "index.html (last HTTP 200)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "grants/index.html (last HTTP 200)"
+    }
+  ]
+}
