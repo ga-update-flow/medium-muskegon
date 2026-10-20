@@ -1,0 +1,27 @@
+{
+  "case": "case-01-page-removed",
+  "result": "PASS",
+  "run_id": "39477555933",
+  "time": "2026-10-20 18:48:23 UTC",
+  "live_url": "https://javedibrahim200.github.io/medium-muskegon/",
+  "changed_files": [
+    "D faith-partner-initiative/index.html"
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "check": "Removed page returns 404 on the live site",
+      "detail": "https://javedibrahim200.github.io/medium-muskegon/faith-partner-initiative/ -> HTTP 404"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "index.html (last HTTP 200)"
+    },
+    {
+      "pass": true,
+      "check": "Unchanged page is identical to the baseline",
+      "detail": "grants/index.html (last HTTP 200)"
+    }
+  ]
+}
