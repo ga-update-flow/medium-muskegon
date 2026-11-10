@@ -29,7 +29,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -58,6 +58,7 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages-a
+          timeout: 1500000
       - name: Wait until the live site serves this branch
         id: live1
         continue-on-error: true
@@ -164,6 +165,7 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages-b
+          timeout: 1500000
       - name: Wait again after the second publish
         if: steps.live1.outcome == 'failure'
         env:
